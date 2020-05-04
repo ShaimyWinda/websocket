@@ -22,7 +22,19 @@
             let user;
             let mySocket
             function connect() {
-                // TO IMPLEMENT
+                // Etape 1
+                mySocket = new WebSocket("ws://localhost:3001");
+                mySocket.onopen = (event) => {
+                    console.info('WebSocket connection opened ', event);
+                };
+                // Etape 2
+                mySocket.onerror = (error) => {
+                    console.error('WebSocket error occurs:', error);
+                };
+
+                mySocket.onclose = (event) => {
+                    console.info('Disconnected', event);
+                  };
             }
 
             function connectUser() {
@@ -36,7 +48,11 @@
 
             function sendMessage() {
                 const message = document.getElementsByName('chat-message')[0].value;
-                // TO IMPLEMENT
+                // Etape 3
+                mySocket.send(JSON.stringify({
+                    user: user,
+                    message: message
+                }))
                 document.getElementsByName('chat-message')[0].value = '';
             }
         </script>
